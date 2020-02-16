@@ -7,7 +7,6 @@ package websocket
 import (
 	"bytes"
 	"context"
-	"crypto/tls"
 	"errors"
 	"io"
 	"io/ioutil"
@@ -17,6 +16,8 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	tls "github.com/refraction-networking/utls"
 )
 
 // ErrBadHandshake is returned when the server response to opening handshake is
@@ -309,7 +310,7 @@ func (d *Dialer) DialContext(ctx context.Context, urlStr string, requestHeader h
 		if cfg.ServerName == "" {
 			cfg.ServerName = hostNoPort
 		}
-		tlsConn := tls.Client(netConn, cfg)
+		tlsConn := tls.UClient(netConn, cfg, tls.HelloChrome_Auto)
 		netConn = tlsConn
 
 		var err error
@@ -382,7 +383,7 @@ func (d *Dialer) DialContext(ctx context.Context, urlStr string, requestHeader h
 	return conn, resp, nil
 }
 
-func doHandshake(tlsConn *tls.Conn, cfg *tls.Config) error {
+func doHandshake(tlsConn *tls.UConn, cfg *tls.Config) error {
 	if err := tlsConn.Handshake(); err != nil {
 		return err
 	}

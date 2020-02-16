@@ -1,3 +1,4 @@
-module github.com/gorilla/websocket
+module github.com/emc2314/websocket
 
-go 1.12
+go 1.13
+
