@@ -157,11 +157,11 @@ func (d *Dialer) DialContext(ctx context.Context, urlStr string, requestHeader h
 		return nil, nil, err
 	}
 
-	h2 := true
-	//if strings.HasSuffix(urlStr, "/h2") {
-	//	h2 = true
-	//	urlStr = strings.TrimSuffix(urlStr, "/h2")
-	//}
+	h2 := false
+	if strings.HasSuffix(urlStr, "/h2") {
+		h2 = true
+		urlStr = strings.TrimSuffix(urlStr, "/h2")
+	}
 
 	u, err := url.Parse(urlStr)
 	if err != nil {
