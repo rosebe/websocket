@@ -1,4 +1,4 @@
-module github.com/emc2314/websocket
+module github.com/rosebe/websocket
 
 go 1.13
 
